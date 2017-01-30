@@ -1,0 +1,10 @@
+body {
+  background: url('images/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.container {
+  background-color: white;
+  margin: 1em;
+  padding: 1em;
+}
