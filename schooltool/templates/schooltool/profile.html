@@ -1,4 +1,4 @@
-{% extends 'todoapp/base.html' %}
+{% extends 'schooltool/base.html' %}
 
 {% block content%}
 <h1>Profile</h1>
@@ -8,10 +8,11 @@
       {{user.name}}
       {{user.email}}
       {% for course in user.courses.all %}
-      
+
       {{course.title}}
 
       {% endfor %}
     </li>
   {% endfor %}
 </ul>
+{% endblock %}
