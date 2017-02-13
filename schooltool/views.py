@@ -13,9 +13,9 @@ def login(request):
     if request.method == "GET":
         return render(request, 'schooltool/login.html')
     if request.method == "POST":
-        email = request.post["email"]
+        username = request.post["username"]
         password = request.post["password"]
-        user = auth.authenticated(email=email, password=password)
+        user = auth.authenticated(username=username, password=password)
         if user is not None:
             auth.login(request, user)
             return redirect('index')
