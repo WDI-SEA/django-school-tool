@@ -78,7 +78,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'schooltoolsite',
-        'HOST': 'localhost'
+        'HOST': 'localhost',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres'
     }
 }
 
