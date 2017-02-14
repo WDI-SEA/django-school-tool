@@ -1,0 +1,17 @@
+{% extends 'schooltool/base.html' %}
+
+{% block content%}
+<h1>Create a New Course</h1>
+<form action="/create_course" method="POST">
+  {% csrf_token %}
+  <input type="text" name="title" placeholder="Course Title" />
+
+  <label>Start Date:</label>
+  <input type="date" name="start_date"/>
+
+  <label>End Date:</label>
+  <input type="date" name="end_date"/>
+
+  <input type="submit" value="Enroll now!" />
+</form>
+{% endblock %}

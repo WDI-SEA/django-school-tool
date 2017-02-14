@@ -1,9 +1,34 @@
 from django.shortcuts import render, redirect
-from .models import Course
+from django.contrib.auth.models import User
+from django.contrib import auth
+from .models import Course, Staff, Student
+
 # Create your views here.
 
 def index(request):
-  return render(request, 'schooltool/index.html')
+  context = {
+    "courses": Course.objects.all()
+  }
+  return render(request, 'schooltool/index.html', context)
+
+def create_course(request):
+	if request.method == "GET":
+		context = {
+			"courses": Course.objects.all()
+			# "courses": Course.objects.filter(user_id = request.user.id).select_related()
+		}
+		return render(request, 'schooltool/create_course.html', context)
+	elif request.method == "POST":
+		# if request.user.is_authenticated:
+			new_course = Course()
+			new_course.title = request.POST["title"]
+			new_course.start_date = request.POST["start_date"]
+			new_course.end_date = request.POST["end_date"]
+			new_course.user_id = request.user.id
+			new_course.save()
+			return redirect('index')
+		# else:
+		# 	return redirect('/create_course')
 
 def edit_course(request, course_id):
     if request.user.is_staff:
@@ -29,9 +54,9 @@ def edit_course(request, course_id):
 
 
 def profile(request):
-   context = {"error": False}
-   if request.user.is_authenticated:
-       return render(request, 'schooltool/secret.html')
-   else:
-       context["error"] = "Not authenticated"
-       return render(request, 'schooltool/signup.html', context)
+	context = {"error": False}
+	if request.user.is_authenticated:
+		return render(request, 'schooltool/secret.html')
+	else:
+		context["error"] = "Not authenticated"
+		return render(request, 'schooltool/signup.html', context)
