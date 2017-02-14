@@ -13,7 +13,7 @@ def edit_course(request, course_id):
             }
             context["course"].start_date = context["course"].start_date.strftime('%Y-%m-%d')
             context["course"].end_date = context["course"].end_date.strftime('%Y-%m-%d')
-            
+
             return render(request, 'schooltool/edit_course.html', context)
 
         elif request.method == "POST":
@@ -26,3 +26,12 @@ def edit_course(request, course_id):
                 return redirect('/courses/' + course_id + '/edit')
     else:
         return redirect('/courses/' + course_id)
+
+
+def profile(request):
+   context = {"error": False}
+   if request.user.is_authenticated:
+       return render(request, 'schooltool/secret.html')
+   else:
+       context["error"] = "Not authenticated"
+       return render(request, 'schooltool/signup.html', context)
