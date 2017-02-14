@@ -26,3 +26,11 @@ def signup(request):
         except:
             context["error"] = f"User {username} already exists"
             return render(request, 'schooltool/signup.html', context)
+
+def profile(request):
+   context = {"error": False}
+   if request.user.is_authenticated:
+       return render(request, 'schooltool/secret.html')
+   else:
+       context["error"] = "Not authenticated"
+       return render(request, 'schooltool/signup.html', context)
