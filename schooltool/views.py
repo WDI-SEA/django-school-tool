@@ -93,3 +93,9 @@ def profile(request):
 	else:
 		context["error"] = "Not authenticated"
 		return render(request, 'schooltool/signup.html', context)
+
+def courses(request):
+  context = {
+    "courses" :  Course.objects.all()
+  }
+  return render(request, 'schooltool/courses.html', context)
