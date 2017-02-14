@@ -22,3 +22,11 @@ def login(request):
         else:
             context = {"Error": "User not authenticated"}
             return redirect('login')
+
+def profile(request):
+   context = {"error": False}
+   if request.user.is_authenticated:
+       return render(request, 'schooltool/secret.html')
+   else:
+       context["error"] = "Not authenticated"
+       return render(request, 'schooltool/signup.html', context)
