@@ -1,0 +1,17 @@
+{% extends 'schooltool/base.html' %}
+
+{% block content %}
+<h1>Edit Course</h1>
+<p>Welcome to school tool</p>
+
+<form action="/courses/{{course.id}}/edit" method="POST">
+  {% csrf_token %}
+  <input type="text" name="request" value="PUT" hidden>
+  <input type="text" name="title" value="{{ course.title }}">
+  <input type="text" name="max_students" value="{{ course.max_students }}">
+  <input type="date" name="start_date" value="{{ course.start_date }}">
+  <input type="date" name="end_date" value="{{ course.end_date }}">
+  <input type="submit">
+</form>
+
+{% endblock %}
