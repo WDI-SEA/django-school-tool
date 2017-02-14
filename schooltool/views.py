@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
 from .models import Course, Staff, Student
-
 # Create your views here.
 
 def index(request):
@@ -30,6 +29,41 @@ def create_course(request):
 		# else:
 		# 	return redirect('/create_course')
 
+def login(request):
+    context = {"Error": False}
+    if request.method == "GET":
+        return render(request, 'schooltool/login.html')
+    if request.method == "POST":
+        username = request.post["username"]
+        password = request.post["password"]
+        user = auth.authenticated(username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            return redirect('index')
+        else:
+            context = {"Error": "User not authenticated"}
+            return redirect('login')
+
+def signup(request):
+    context = {"error": False}
+    if request.method == "GET":
+        return render(request, 'schooltool/signup.html', context)
+    elif request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        if 'is_staff' in request.POST:
+          is_staff = True
+        else:
+          is_staff = False
+        try:
+            user = User.objects.create_user(username=username, password=password, is_staff=is_staff)
+            print(user)
+            if user is not None:
+                return login(request)
+        except:
+            context["error"] = f"User {username} already exists"
+            return render(request, 'schooltool/signup.html', context)
+
 def edit_course(request, course_id):
     if request.user.is_staff:
         if request.method == "GET":
@@ -52,7 +86,6 @@ def edit_course(request, course_id):
     else:
         return redirect('/courses/' + course_id)
 
-
 def profile(request):
 	context = {"error": False}
 	if request.user.is_authenticated:
@@ -60,3 +93,9 @@ def profile(request):
 	else:
 		context["error"] = "Not authenticated"
 		return render(request, 'schooltool/signup.html', context)
+
+def courses(request):
+  context = {
+    "courses" :  Course.objects.all()
+  }
+  return render(request, 'schooltool/courses.html', context)

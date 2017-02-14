@@ -1,0 +1,10 @@
+{% extends 'schooltool/base.html' %}
+
+{% block content %}
+<h1>Courses</h1>
+
+{% for course in courses %}
+<li>{{course.title}} | Max Students: <span>{{course.max_students}}</span> | Start Dated: <span>{{course.start_date}}</span> |  End Date: <span>{{course.end_date}}</span></li>
+{% endfor %}
+
+{% endblock %}

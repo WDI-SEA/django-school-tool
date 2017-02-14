@@ -1,0 +1,17 @@
+{% extends 'schooltool/base.html' %}
+
+{% block content %}
+  {% if error %}
+    <div class="alert alert-warning">
+      <strong>Error!</strong> {{error}}
+    </div>
+  {% endif %}
+  <h1>Sign up</h1>
+  <form action="/signup" method="POST">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="Enter Username">
+    <input type="password" name="password" placeholder="Enter Password">
+    <label for="is_staff">Staff member<input type="checkbox" name="is_staff" value="true"></label>
+    <input type="submit">
+  </form>
+{% endblock %}
