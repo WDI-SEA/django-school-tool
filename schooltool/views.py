@@ -3,6 +3,7 @@ from .models import Course
 # Create your views here.
 
 def index(request):
+<<<<<<< HEAD
   return render(request, 'schooltool/index.html')
 
 def edit_course(request, course_id):
@@ -26,3 +27,14 @@ def edit_course(request, course_id):
                 return redirect('/courses/' + course_id + '/edit')
     else:
         return redirect('/courses/' + course_id)
+=======
+ return render(request, 'schooltool/index.html')
+
+def profile(request):
+   context = {"error": False}
+   if request.user.is_authenticated:
+       return render(request, 'schooltool/secret.html')
+   else:
+       context["error"] = "Not authenticated"
+       return render(request, 'schooltool/signup.html', context)
+>>>>>>> 3dd47cc3beeb170caf7ebdb473668dd9e29293ea
