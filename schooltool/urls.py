@@ -7,6 +7,7 @@ urlpatterns = [
     # url(r'^(?P<pk>[0-9]+)/results/$', views.ResultsView.as_view(), name="results"),
     # url(r'^(?P<question_id>[0-9]+)/vote/$', views.vote, name="vote"),
     url(r'^create_course$', views.create_course, name="create_course"),
+    url(r'^login$', views.login, name="login"),
+    url(r'^profile$', views.profile, name="profile"),
     url(r'^courses/(?P<course_id>[0-9]+)/edit$', views.edit_course, name="edit_course"),
-    url(r'^profile$', views.profile, name="profile")
 ]

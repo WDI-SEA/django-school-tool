@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
 from .models import Course, Staff, Student
-
 # Create your views here.
 
 def index(request):
@@ -30,6 +29,21 @@ def create_course(request):
 		# else:
 		# 	return redirect('/create_course')
 
+def login(request):
+    context = {"Error": False}
+    if request.method == "GET":
+        return render(request, 'schooltool/login.html')
+    if request.method == "POST":
+        username = request.post["username"]
+        password = request.post["password"]
+        user = auth.authenticated(username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            return redirect('index')
+        else:
+            context = {"Error": "User not authenticated"}
+            return redirect('login')
+
 def edit_course(request, course_id):
     if request.user.is_staff:
         if request.method == "GET":
@@ -51,7 +65,6 @@ def edit_course(request, course_id):
                 return redirect('/courses/' + course_id + '/edit')
     else:
         return redirect('/courses/' + course_id)
-
 
 def profile(request):
 	context = {"error": False}
