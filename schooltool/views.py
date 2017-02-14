@@ -44,6 +44,26 @@ def login(request):
             context = {"Error": "User not authenticated"}
             return redirect('login')
 
+def signup(request):
+    context = {"error": False}
+    if request.method == "GET":
+        return render(request, 'schooltool/signup.html', context)
+    elif request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        if 'is_staff' in request.POST:
+          is_staff = True
+        else:
+          is_staff = False
+        try:
+            user = User.objects.create_user(username=username, password=password, is_staff=is_staff)
+            print(user)
+            if user is not None:
+                return login(request)
+        except:
+            context["error"] = f"User {username} already exists"
+            return render(request, 'schooltool/signup.html', context)
+
 def edit_course(request, course_id):
     if request.user.is_staff:
         if request.method == "GET":
